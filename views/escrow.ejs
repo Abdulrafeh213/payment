@@ -1,0 +1,22 @@
+<% include layout.ejs %>
+<h2>Escrow: <%= escrow.order_id %></h2>
+<p>Seller: <%= escrow.seller_id %></p>
+<p>Amount: <%= (escrow.amount/100).toFixed(2) %> <%= escrow.currency %></p>
+<p>Status: <%= escrow.status %></p>
+<p>Paid at: <%= escrow.paid_at %></p>
+<p>Release at: <%= escrow.release_at %></p>
+
+<form method="post" action="/admin/escrow/<%= escrow.id %>/release">
+  <button type="submit">Release Now</button>
+</form>
+
+<form method="post" action="/admin/escrow/<%= escrow.id %>/refund" onsubmit="return confirm('refund?');">
+  <button type="submit">Refund</button>
+</form>
+
+<h3>Transactions</h3>
+<ul>
+  <% transactions.forEach(function(t){ %>
+    <li><strong><%= t.type %></strong> | <%= (t.amount/100).toFixed(2) %> | <%= new Date(t.created_at).toLocaleString() %></li>
+  <% }) %>
+</ul>
